@@ -8,6 +8,8 @@ const path = require('path')
 const Websocket = require('websocket-stream')
 const url = require('url')
 const hexTo32 = require('hex-to-32')
+const bonjour = require('bonjour')()
+
 
 const BASE_32_KEY_LENGTH = 52
 const ERR_404 = 'Not found'
@@ -163,7 +165,8 @@ class DatGateway extends DatLibrarian {
             // TODO: Detect DatDNS addresses
             let encodedAddress = hexTo32.encode(resolvedAddress)
             let redirectURL = `http://${encodedAddress}.${urlParts.host}/${path}${urlParts.search || ''}`
-
+            // publish this in bonjour
+            bonjour.publish({ name: resolvedAddress, host: `${encodedAddress}.${urlParts.host}`, type: 'http', port: 3000 })
             log('Redirecting %s to %s', address, redirectURL)
             res.setHeader('Location', redirectURL)
             res.writeHead(302)

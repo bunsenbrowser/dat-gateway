@@ -9,6 +9,7 @@
     "test": "standard && dependency-check . --unused --no-dev && mocha"
   },
   "dependencies": {
+    "bonjour": "^3.5.0",
     "dat-librarian": "^1.1.2-alpha",
     "hex-to-32": "^2.0.0",
     "hyperdrive-http": "^4.2.2",
